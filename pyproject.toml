@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "passport"
+version = "0.1.0"
+dependencies = [
+    "requests",
+]
+authors = [
+    {name = "Zachary Spar", email = "zachspar@gmail.com"}
+]
+description = "A Python library for interacting with the Priority Passport Web API."
+
+[project.urls]
+Homepage = "https://github.com/Groupay-LLC/prioritypassport-api"
+Issues = "https://github.com/Groupay-LLC/prioritypassport-api/issues"

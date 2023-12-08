@@ -16,13 +16,14 @@ class MailingAddressData:
     """
     Priority Passport Mailing Address.
     """
+
     addressLine1: str
     addressLine2: str
     city: str
     state: str
     zip: str
     isPrimary: bool
-    usage: dict
+    usage: dict = {"isPayorAddress": True}
 
 
 @dataclass
@@ -30,6 +31,7 @@ class IndividualData:
     """
     Priority Passport Individual.
     """
+
     firstName: str
     lastName: str
     email: str
@@ -41,6 +43,7 @@ class PassportCustomerData:
     """
     Priority Passport Customer.
     """
+
     type: str = "INDIVIDUAL"
     individual: IndividualData
     externalId: str
@@ -65,9 +68,7 @@ class PassportCustomerAPI(BaseClient):
         """
         Create a checking account for a customer.
         """
-        data = {
-            "purpose": "checking"
-        }
+        data = {"purpose": "checking"}
         post_req = self._post(f"/v1/customer/id/{customer_id}/account")
         if post_req.status_code == 201:
             return True

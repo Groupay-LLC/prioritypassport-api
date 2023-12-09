@@ -18,16 +18,21 @@ class BaseClient:
             self.base_url = "https://api.prioritypassport.com"
             raise ValueError("NOTE: Production API not yet supported!!")
 
+    @property
+    def _headers(self):
+        return {
+            "Authorization": f"Bearer {self._api_key}",
+            "Content-Type": "application/json",
+        }
+
     def _get(self, endpoint: str, params: dict = None):
         if params is None:
             params = {}
-        params["api_key"] = self._api_key
-        return get(self.base_url + endpoint, params=params)
+        return get(self.base_url + endpoint, params=params, headers=self._headers)
 
     def _post(self, endpoint: str, data: dict = None, params: dict = None):
         if data is None:
             raise ValueError("POST data cannot be None")
         if params is None:
             params = {}
-        params["api_key"] = self._api_key
-        return post(self.base_url + endpoint, data=data, params=params)
+        return post(self.base_url + endpoint, json=data, params=params, headers=self._headers)

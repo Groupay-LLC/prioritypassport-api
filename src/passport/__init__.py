@@ -1,4 +1,4 @@
 """
 Base package for Passport API
 """
-from api import PassportAPI
+from .api import PassportAPI

@@ -68,7 +68,7 @@ class PassportCustomerAPI(BaseClient):
             logger.info("Customer created", customer_data=asdict(customer_data))
             return True
         else:
-            logger.warning("Unable to create customer", customer_data=asdict(customer_data, res=post_req.json()))
+            logger.warning("Unable to create customer", customer_data=asdict(customer_data), res=post_req.json())
             return False
 
     def create_customer_checking_account_by_id(self, customer_id: str) -> bool:

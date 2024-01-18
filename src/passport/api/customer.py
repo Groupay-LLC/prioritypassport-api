@@ -51,7 +51,7 @@ class PassportCustomerData:
 
     individual: IndividualData
     externalId: str
-    type: str = field(default="individual")
+    type: str = field(default="INDIVIDUAL")
 
 
 class PassportCustomerAPI(BaseClient):
@@ -97,6 +97,59 @@ class PassportCustomerAPI(BaseClient):
                 res=post_req.json(),
             )
             return False
+
+    def retrieve_virtual_card_details_by_ext_ids(self, customer_ext_id: str, account_ext_id: str, card_ext_id: str):
+        """
+        Get virtual card details by external IDs.
+        :param customer_ext_id:
+        :param account_ext_id:
+        :param card_ext_id:
+        :return: Virtual card details
+        """
+        get_url = f"/v1/customer/externalId/{customer_ext_id}/account/externalId/{account_ext_id}/virtualCard/externalId/{card_ext_id}"
+        get_req = self._get(get_url)
+        if get_req.status_code == 200:
+            logger.info(
+                "Virtual card details retrieved by external IDs",
+                customer_ext_id=customer_ext_id,
+                account_ext_id=account_ext_id,
+                card_ext_id=card_ext_id,
+            )
+            return get_req.json()
+        else:
+            logger.warning(
+                "Unable to retrieve virtual card details by external IDs",
+                customer_ext_id=customer_ext_id,
+                account_ext_id=account_ext_id,
+                card_ext_id=card_ext_id,
+                res=get_req.json(),
+            )
+            return {}
+
+    def retrieve_virtual_card_details_by_ids(self, customer_id: int, account_id: int, card_id: int) -> dict:
+        """
+        Get virtual card details by IDs.
+        :param customer_id:
+        :param account_id:
+        :param card_id:
+        :return: Virtual card details
+        """
+        get_url = f"/v1/customer/id/{customer_id}/account/id/{account_id}/virtualCard/id/{card_id}"
+        get_req = self._get(get_url)
+        if get_req.status_code == 200:
+            logger.info(
+                "Virtual card details retrieved", customer_id=customer_id, account_id=account_id, card_id=card_id
+            )
+            return get_req.json()
+        else:
+            logger.warning(
+                "Unable to retrieve virtual card details",
+                customer_id=customer_id,
+                account_id=account_id,
+                card_id=card_id,
+                res=get_req.json(),
+            )
+            return {}
 
     def get_by_external_id(self, external_id: str) -> dict:
         """
